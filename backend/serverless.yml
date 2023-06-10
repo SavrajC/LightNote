@@ -1,0 +1,59 @@
+service: lightNote
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        Fn::GetAtt: [NotesTable, Arn]
+  runtime: nodejs16.x
+
+  region: us-west-2
+  tracing:
+    lambda: true
+  environment:
+    stage: ${opt:stage, 'dev'}
+    TABLE_NAME: ${self:provider.environment.stage}-notes
+
+functions:
+  getNotes:
+    handler: getNotes.getNotes
+    events:
+      - httpApi:
+          path: /user/{accountID}/note
+          method: get
+  createNote:
+    handler: createNote.createNote
+    events:
+      - httpApi:
+          path: /user/{accountID}/note
+          method: post
+  # getSingleNote:
+  #   handler: getSingleNote.getSingleNote
+  #   events:
+  #     - httpApi:
+  #         path: /user/${accountID}/note/${noteID}
+  #         method: get
+  # updateNote:
+  #   handler: createNote.createNote
+  #   events:
+  #     - httpApi:
+  #         path: /user/${accountID}/note/${noteID}
+  #         method: put
+  # deleteNote:
+  #   handler: createNote.createNote
+  #   events:
+  #     - httpApi:
+  #         path: /user/${accountID}/note/${noteID}
+  #         method: post
+resources:
+  - ${file(resources/notes.yml)}
