@@ -35,11 +35,11 @@ const NoteApp = () => {
       setTitle={setTitle} 
       setTime={setTime} 
       setTags = {setTags} />
-
+      
       <Content content={content} 
       title = {title} 
       time = {time} 
-      tags ={tags} />
+      ags ={tags} />
     </div>
   );
 };

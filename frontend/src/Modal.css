@@ -1,0 +1,84 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.btn-modal {
+  padding: 10px;
+  display: block;
+  background-color: #0e1420;
+  color: #ffffff;
+  border-radius: 3px;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+  width: 100%;
+  border: 0.5px solid #616161;
+  margin-top: 15px;
+}
+
+.btn-modal:hover {
+  background-color: #ffffff;
+  color: #0e1420;
+  border-color: #0e1420;
+}
+
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background-color: #0e1420;
+  padding: 14px 28px;
+  border-radius: 10px; /* Rounded corners */
+  max-width: 600px;
+  min-width: 300px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px 10px;
+  background-color: #0e1420; /* Same color as the background */
+  color: #ffffff; /* White text color */
+  border-radius: 3px; /* Rounded corners */
+  border: none; /* Remove the border */
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.close-modal:hover {
+  background-color: #ffffff; /* Change the background color on hover */
+  color: #0e1420; /* Change the text color on hover */
+}
+.search-box {
+  background-color: #0e1420; /* Background color with transparency */
+  border-radius: 5px; /* Rounded edges */
+  border: 1px solid #ccc; /* Thin grey border */
+  height: 35px; /* Adjust the height */
+  width: 300px; /* Adjust the width */
+  font-size: 15px;
+  color: #ffffff;
+}
+.notes-container {
+  margin-top: 10px;
+  width: 300px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling if necessary */
+}
+
+.button-text {
+  margin-left: 8px; /* Adjust the value to set the desired space */
+}

@@ -1,8 +1,10 @@
+
 import React from "react";
 import Note from "./Note";
+import SearchModal from "./SearchModal";
+
 
 const Results = ({ notes, setContent, setTitle, setTime, setTags }) => {
-
 
   return (
     <div className="results">
@@ -17,13 +19,18 @@ const Results = ({ notes, setContent, setTitle, setTime, setTags }) => {
             key={note.noteID}
             setContent = {setContent}
             setTitle={setTitle} 
-            setTime={setTime} 
-            setTags = {setTags} 
+            setTime={setTime} setTags = {setTags} 
           />
         ))
       ) : (
         <h1>No notes Found</h1>
       )}
+      <SearchModal
+            notes={notes}
+            setContent = {setContent}
+            setTitle={setTitle} 
+            setTime={setTime} setTags = {setTags} />
+       
     </div>
   );
 };
