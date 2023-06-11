@@ -26,9 +26,9 @@ const SearchModal = ({ notes, setContent, setTitle, setTime, setTags }) => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
-      const term = event.target.value.trim();
+      const term = searchInput.trim();
       setSearchTerm(term);
-
+  
       if (term !== "") {
         const results = notes.filter((note) => {
           const time = note.timeCreated.toString().toLowerCase();
@@ -44,7 +44,7 @@ const SearchModal = ({ notes, setContent, setTitle, setTime, setTags }) => {
       }
     }
   };
-
+  
   useEffect(() => {
     if (modal) {
       document.body.classList.add("active-modal");
@@ -55,10 +55,10 @@ const SearchModal = ({ notes, setContent, setTitle, setTime, setTags }) => {
 
   return (
     <>
-    <button className="btn-modal">
-      <FontAwesomeIcon icon={faSearch} className="search-icon" />
-      <span className="button-text">Search</span>
-    </button>
+    <button className="btn-modal" onClick={toggleModal}>
+  <FontAwesomeIcon icon={faSearch} className="search-icon" />
+  <span className="button-text">Search</span>
+</button>
 
       {modal && (
         <div className="modal">
