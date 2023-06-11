@@ -35,6 +35,7 @@ module.exports.createNote = async (event) => {
         message: "Succesfully Created Note",
         input: event,
         result: result,
+        params: params,
       },
       null,
       2

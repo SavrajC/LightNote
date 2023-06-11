@@ -1,18 +1,22 @@
-
-const Note = ({noteTitle, time, noteContent,tags}) => {
+const Note = ({ noteTitle, tags }) => {
     return (
-         <div>
-           <h1>{noteTitle}</h1>
-           <h2>
-              {time}
-           </h2>
-           <h2>
-              {tags}
-           </h2>
-           <textarea defaultValue={noteContent}></textarea>
-         </div>
-        
-       );
-}
-
-export default Note;
+      <div className="noteCard">
+        <h1 className="noteTitle">{noteTitle}</h1>
+  
+        <h2 className="tagsContainer">
+          {tags && tags.length ? (
+            tags.map((tag) => (
+              <span key={tag} className="tag">
+                {tag}
+              </span>
+            ))
+          ) : (
+            <h2>No Tags Found</h2>
+          )}
+        </h2>
+      </div>
+    );
+  };
+  
+  export default Note;
+  

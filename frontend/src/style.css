@@ -1,6 +1,68 @@
 body {
-  background-color: #141414;
+  background-color: #111926;
   margin: 0;
   color: #ffffff;
   font-family: "Inter", sans-serif;
+}
+
+.noteCard {
+  width: 200px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s; /* Add transition for smooth effect */
+
+  /* Set the default background color */
+  background-color: #0e1420;
+}
+
+.noteCard:hover {
+  background-color: #29304c; /* Change to a slightly lighter color on hover */
+}
+
+.tagsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  margin-bottom: 0; /* Remove the margin-bottom */
+}
+
+.tag {
+  display: inline-block;
+  background-color: blue;
+  color: white;
+  padding: 2px 4px; /* Adjust the padding values */
+  border-radius: 8px; /* Adjust the border-radius */
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 12px; /* Adjust the font size */
+}
+
+.noteTitle {
+  font-size: 15px;
+}
+
+.results {
+  background-color: #0e1420;
+  width: 200px;
+  padding-top: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; /* Use viewport height instead of 100% */
+  box-sizing: border-box; /* Add this property */
+  border-radius: 10px; /* Add border-radius to round the edges */
+}
+
+.titleCard {
+  font-size: 25px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }

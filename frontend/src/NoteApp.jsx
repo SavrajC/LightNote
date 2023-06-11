@@ -31,10 +31,11 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import Results from "./Results";
+import Content from "./Content";
 
 const NoteApp = () => {
     const [notes, setNotes] = useState([]);
-
+    const [content,setContent] = useState([])
     useEffect(() => {
         requestNotes();
     }, []);
@@ -52,7 +53,9 @@ const NoteApp = () => {
 
     return (
         <div>
-            <Results notes={notes} />
+            <Results notes={notes } setContent = {setContent} />
+            <Content content={content}  />
+
         </div>
     );
 }

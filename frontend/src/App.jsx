@@ -4,7 +4,6 @@ import NoteApp from "./NoteApp";
 const App = () => {
   return (
     <div>
-      <h1>Light Notes</h1>
       <NoteApp />
     </div>
   )

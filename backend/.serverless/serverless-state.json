@@ -219,7 +219,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lightNote/savraj/1686393174540-2023-06-10T10:32:54.540Z/lightNote.zip"
+                "S3Key": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z/lightNote.zip"
               },
               "Handler": "getNotes.getNotes",
               "Runtime": "nodejs16.x",
@@ -253,7 +253,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lightNote/savraj/1686393174540-2023-06-10T10:32:54.540Z/lightNote.zip"
+                "S3Key": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z/lightNote.zip"
               },
               "Handler": "createNote.createNote",
               "Runtime": "nodejs16.x",
@@ -280,24 +280,24 @@
               "CreateNoteLogGroup"
             ]
           },
-          "GetNotesLambdaVersionQFTJvtAQV3UfEJj3bMZxanRpCV2EhftNURQLubEc": {
+          "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetNotesLambdaFunction"
               },
-              "CodeSha256": "A0XCUFmTdVw/0fpjZbdjsd76ah+42WR5AfFT/PMan6k="
+              "CodeSha256": "oxBuDD9Jib9gsGGsXaMalQ65mIrdVYdfvBcXNO6xgUI="
             }
           },
-          "CreateNoteLambdaVersionf9lPLjUv8WDtWvxG99sY6kNzrscfty52xuR3l5dHBQ": {
+          "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateNoteLambdaFunction"
               },
-              "CodeSha256": "A0XCUFmTdVw/0fpjZbdjsd76ah+42WR5AfFT/PMan6k="
+              "CodeSha256": "oxBuDD9Jib9gsGGsXaMalQ65mIrdVYdfvBcXNO6xgUI="
             }
           },
           "HttpApi": {
@@ -504,7 +504,7 @@
           "GetNotesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetNotesLambdaVersionQFTJvtAQV3UfEJj3bMZxanRpCV2EhftNURQLubEc"
+              "Ref": "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs"
             },
             "Export": {
               "Name": "sls-lightNote-savraj-GetNotesLambdaFunctionQualifiedArn"
@@ -513,7 +513,7 @@
           "CreateNoteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateNoteLambdaVersionf9lPLjUv8WDtWvxG99sY6kNzrscfty52xuR3l5dHBQ"
+              "Ref": "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs"
             },
             "Export": {
               "Name": "sls-lightNote-savraj-CreateNoteLambdaFunctionQualifiedArn"
@@ -659,7 +659,7 @@
         "timeout": 6,
         "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "GetNotesLambdaVersionQFTJvtAQV3UfEJj3bMZxanRpCV2EhftNURQLubEc"
+        "versionLogicalId": "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs"
       },
       "createNote": {
         "handler": "createNote.createNote",
@@ -679,7 +679,7 @@
         "timeout": 6,
         "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "CreateNoteLambdaVersionf9lPLjUv8WDtWvxG99sY6kNzrscfty52xuR3l5dHBQ"
+        "versionLogicalId": "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs"
       }
     },
     "resources": {
@@ -734,7 +734,7 @@
     "artifact": "/Users/savraj/programming/LightNote/backend/.serverless/lightNote.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/lightNote/savraj/1686393174540-2023-06-10T10:32:54.540Z",
+    "artifactDirectoryName": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z",
     "artifact": "lightNote.zip"
   }
 }
