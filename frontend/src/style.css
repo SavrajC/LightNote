@@ -66,3 +66,12 @@ body {
   align-items: center;
   text-align: center;
 }
+.content {
+  background-color: #111926;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  flex-grow: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: 200px; /* Add a margin to create space for the sidebar */
+}
