@@ -122,6 +122,12 @@
               "LogGroupName": "/aws/lambda/lightNote-savraj-createNote"
             }
           },
+          "UpdateNoteLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/lightNote-savraj-updateNote"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -219,7 +225,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z/lightNote.zip"
+                "S3Key": "serverless/lightNote/savraj/1686474354373-2023-06-11T09:05:54.373Z/lightNote.zip"
               },
               "Handler": "getNotes.getNotes",
               "Runtime": "nodejs16.x",
@@ -253,7 +259,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z/lightNote.zip"
+                "S3Key": "serverless/lightNote/savraj/1686474354373-2023-06-11T09:05:54.373Z/lightNote.zip"
               },
               "Handler": "createNote.createNote",
               "Runtime": "nodejs16.x",
@@ -280,24 +286,68 @@
               "CreateNoteLogGroup"
             ]
           },
-          "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs": {
+          "UpdateNoteLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/lightNote/savraj/1686474354373-2023-06-11T09:05:54.373Z/lightNote.zip"
+              },
+              "Handler": "updateNote.updateNote",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "lightNote-savraj-updateNote",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "TracingConfig": {
+                "Mode": "Active"
+              },
+              "Environment": {
+                "Variables": {
+                  "stage": "savraj",
+                  "TABLE_NAME": "savraj-notes"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateNoteLogGroup"
+            ]
+          },
+          "GetNotesLambdaVersion8u8nyWS2lj76V9IT3Y2H5LCug5kveuTWbql8ku3vxHI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetNotesLambdaFunction"
               },
-              "CodeSha256": "oxBuDD9Jib9gsGGsXaMalQ65mIrdVYdfvBcXNO6xgUI="
+              "CodeSha256": "4biE+ly98LNUraRGtbgu4xH+9+/py4fnP30DiPbApAM="
             }
           },
-          "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs": {
+          "CreateNoteLambdaVersionsqx84JQM0DCL5nQFGvSqkfgyEXxRtywibkb1ciCkA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateNoteLambdaFunction"
               },
-              "CodeSha256": "oxBuDD9Jib9gsGGsXaMalQ65mIrdVYdfvBcXNO6xgUI="
+              "CodeSha256": "4biE+ly98LNUraRGtbgu4xH+9+/py4fnP30DiPbApAM="
+            }
+          },
+          "UpdateNoteLambdaVersion3XgoYVzTwM3ZNjEIsDCAZ14yYT5dSnhR4fhNGcoU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateNoteLambdaFunction"
+              },
+              "CodeSha256": "4biE+ly98LNUraRGtbgu4xH+9+/py4fnP30DiPbApAM="
             }
           },
           "HttpApi": {
@@ -464,6 +514,78 @@
             },
             "DependsOn": "HttpApiIntegrationCreateNote"
           },
+          "UpdateNoteLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateNoteLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationUpdateNote": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateNoteLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 6500
+            }
+          },
+          "HttpApiRoutePostUserAccountidVarNoteNoteidVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /user/{accountID}/note/{noteID}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationUpdateNote"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationUpdateNote"
+          },
           "NotesTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
@@ -504,7 +626,7 @@
           "GetNotesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs"
+              "Ref": "GetNotesLambdaVersion8u8nyWS2lj76V9IT3Y2H5LCug5kveuTWbql8ku3vxHI"
             },
             "Export": {
               "Name": "sls-lightNote-savraj-GetNotesLambdaFunctionQualifiedArn"
@@ -513,10 +635,19 @@
           "CreateNoteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs"
+              "Ref": "CreateNoteLambdaVersionsqx84JQM0DCL5nQFGvSqkfgyEXxRtywibkb1ciCkA"
             },
             "Export": {
               "Name": "sls-lightNote-savraj-CreateNoteLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateNoteLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateNoteLambdaVersion3XgoYVzTwM3ZNjEIsDCAZ14yYT5dSnhR4fhNGcoU"
+            },
+            "Export": {
+              "Name": "sls-lightNote-savraj-UpdateNoteLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -659,7 +790,7 @@
         "timeout": 6,
         "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "GetNotesLambdaVersionBbwRDJjpd5bO2W49ocAfGlsxfOS6So8qbuHuXZGYs"
+        "versionLogicalId": "GetNotesLambdaVersion8u8nyWS2lj76V9IT3Y2H5LCug5kveuTWbql8ku3vxHI"
       },
       "createNote": {
         "handler": "createNote.createNote",
@@ -679,7 +810,27 @@
         "timeout": 6,
         "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "CreateNoteLambdaVersionQZ2H0hyYUi2s2j4AeoRXwc22nIYs1SaMOnc6mHvs"
+        "versionLogicalId": "CreateNoteLambdaVersionsqx84JQM0DCL5nQFGvSqkfgyEXxRtywibkb1ciCkA"
+      },
+      "updateNote": {
+        "handler": "updateNote.updateNote",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/user/{accountID}/note/{noteID}",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/user/{accountID}/note/{noteID}"
+          }
+        ],
+        "name": "lightNote-savraj-updateNote",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs16.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateNoteLambdaVersion3XgoYVzTwM3ZNjEIsDCAZ14yYT5dSnhR4fhNGcoU"
       }
     },
     "resources": {
@@ -734,7 +885,7 @@
     "artifact": "/Users/savraj/programming/LightNote/backend/.serverless/lightNote.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/lightNote/savraj/1686449552577-2023-06-11T02:12:32.577Z",
+    "artifactDirectoryName": "serverless/lightNote/savraj/1686474354373-2023-06-11T09:05:54.373Z",
     "artifact": "lightNote.zip"
   }
 }
