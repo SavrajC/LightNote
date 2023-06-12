@@ -65,9 +65,9 @@ body.active-modal {
   color: #0e1420; /* Change the text color on hover */
 }
 .search-box {
-  background-color: #0e1420; /* Background color with transparency */
+  background-color: #000000; /* Background color with transparency */
   border-radius: 5px; /* Rounded edges */
-  border: 1px solid #ccc; /* Thin grey border */
+  border: none; /* Thin grey border */
   height: 35px; /* Adjust the height */
   width: 300px; /* Adjust the width */
   font-size: 15px;

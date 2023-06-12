@@ -16,6 +16,8 @@ provider:
       Resource:
         Fn::GetAtt: [NotesTable, Arn]
   runtime: nodejs16.x
+  httpApi:
+    cors: true
 
   region: us-west-2
   tracing:
@@ -31,12 +33,21 @@ functions:
       - httpApi:
           path: /user/{accountID}/note
           method: get
+
   createNote:
     handler: createNote.createNote
     events:
       - httpApi:
           path: /user/{accountID}/note
           method: post
+
+  updateNote:
+    handler: updateNote.updateNote
+    events:
+      - httpApi:
+          path: /user/{accountID}/note/{noteID}
+          method: post
+
   # getSingleNote:
   #   handler: getSingleNote.getSingleNote
   #   events:

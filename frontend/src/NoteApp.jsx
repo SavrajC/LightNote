@@ -9,6 +9,7 @@ const NoteApp = () => {
   const [time, setTime] = useState("");
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState("");
+  const [noteID, setNoteID] = useState("")
 
 
   useEffect(() => {
@@ -34,12 +35,14 @@ const NoteApp = () => {
       setContent={setContent} 
       setTitle={setTitle} 
       setTime={setTime} 
-      setTags = {setTags} />
+      setTags = {setTags} 
+      setNoteID = {setNoteID}/>
       
       <Content content={content} 
       title = {title} 
       time = {time} 
-      ags ={tags} />
+      tags ={tags} 
+      noteID = {noteID}/>
     </div>
   );
 };

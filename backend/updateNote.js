@@ -2,16 +2,15 @@ const AWS = require("aws-sdk");
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const tableName = process.env.TABLE_NAME;
 
-module.exports.createNote = async (event) => {
+module.exports.updateNote = async (event) => {
   console.log(event);
   const accountID = event.pathParameters.accountID;
+  const noteID = event.pathParameters.noteID;
   event = JSON.parse(event.body);
 
-  const noteID = AWS.util.uuid.v4();
   const noteTitle = event.noteTitle;
   const tags = event.tags;
   const noteContent = event.noteContent;
-
   let timeCreated = Date.now();
 
   var params = {

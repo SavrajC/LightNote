@@ -4,7 +4,7 @@ import Note from "./Note";
 import SearchModal from "./SearchModal";
 
 
-const Results = ({ notes, setContent, setTitle, setTime, setTags }) => {
+const Results = ({ notes, setContent, setTitle, setTime, setTags, setNoteID }) => {
 
   return (
     <div className="results">
@@ -16,10 +16,13 @@ const Results = ({ notes, setContent, setTitle, setTime, setTags }) => {
             tags={note.tags}
             time={note.timeCreated}
             noteContent={note.noteContent}
+            noteID={note.noteID}
             key={note.noteID}
             setContent = {setContent}
             setTitle={setTitle} 
-            setTime={setTime} setTags = {setTags} 
+            setTime={setTime} 
+            setTags = {setTags} 
+            setNoteID={setNoteID}
           />
         ))
       ) : (
