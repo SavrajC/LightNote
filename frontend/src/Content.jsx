@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Content = ({ content, time, title, noteID, tags }) => {
   console.log("Content pagenoteTitle: " + title);
   console.log("Content page noteid: " + noteID);
   console.log("Content page tags: " + tags);
   console.log("Content page noteContenr: " + content);
+
   // Convert epoch time to a Date object
   const formattedTime = new Date(time).toLocaleString();
 
@@ -37,22 +40,22 @@ const Content = ({ content, time, title, noteID, tags }) => {
 
   // Event handler for saving the data
   // Event handler for saving the data
-const handleSave = () => {
+  const handleSave = () => {
     if (!isSaving) {
       setIsSaving(true);
-  
+
       console.log("Content pagenoteTitle: " + editedTitle);
       console.log("Content page noteid: " + noteID);
       console.log("Content page tags: " + editedTags);
       console.log("Content page noteContenr: " + editedContent);
-  
+
       // Create the data object to be sent in the API request
       const data = {
         noteTitle: editedTitle,
         noteContent: editedContent,
         tags: editedTags,
       };
-  
+
       // Make the API request using Axios
       axios
         .post(
@@ -61,25 +64,34 @@ const handleSave = () => {
         )
         .then((response) => {
           console.log("Data saved successfully:", response.data);
+          toast("Saved", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
           setTimeout(() => {
             setIsSaving(false);
           }, 30000); // Allow saving again after 30 seconds
         })
         .catch((error) => {
           console.error("Error saving data:", error);
+
           setIsSaving(false);
         });
     }
   };
-  
-
 
   // Save the content when the component is unmounted
   useEffect(() => {
     return () => {
       handleSave();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Event handler for Enter key press
@@ -92,6 +104,17 @@ const handleSave = () => {
         setTimeout(() => {
           setIsSaving(false);
         }, 30000); // Allow saving again after 30 seconds
+      } else {
+        toast("Wait 30 seconds to save", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     }
   };
@@ -105,9 +128,11 @@ const handleSave = () => {
           onChange={handleTitleChange}
           className="title-input"
         />
-        <label htmlFor="tagsInput" className="tags-title">Tags: </label>
+        <label htmlFor="tagsInput" className="tags-title">
+          Tags:{" "}
+        </label>
         <input
-        className="tags-input"
+          className="tags-input"
           type="text"
           id="tagsInput"
           value={editedTags.join(",")}
@@ -128,9 +153,9 @@ const handleSave = () => {
         onKeyPress={handleKeyPress}
       ></textarea>
       <h3 className="timeDisplay">{formattedTime}</h3>
+      <ToastContainer />
     </div>
   );
-  
 };
 
 export default Content;
