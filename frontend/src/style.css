@@ -3,6 +3,7 @@ body {
   margin: 0;
   color: #ffffff;
   font-family: "Inter", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .noteCard {
@@ -35,9 +36,9 @@ body {
 
 .tag {
   display: inline-block;
-  background-color: blue;
+  background-color: #02386d;
   color: white;
-  padding: 2px 4px; /* Adjust the padding values */
+  padding: 3px 5px; /* Adjust the padding values */
   border-radius: 8px; /* Adjust the border-radius */
   margin-right: 5px;
   margin-bottom: 5px;
@@ -45,19 +46,7 @@ body {
 }
 
 .noteTitle {
-  font-size: 15px;
-}
-
-.results {
-  background-color: #0e1420;
-  width: 200px;
-  padding-top: 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh; /* Use viewport height instead of 100% */
-  box-sizing: border-box; /* Add this property */
-  border-radius: 10px; /* Add border-radius to round the edges */
+  font-size: 16px;
 }
 
 .titleCard {
@@ -67,36 +56,6 @@ body {
   text-align: center;
 }
 
-/* .content {
-  background-color: #111926;
-  color: #ffffff;
-  font-family: "Inter", sans-serif;
-  flex-grow: 1;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-left: 200px;
-} */
-
-/* .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #0e1420;
-  color: #ffffff;
-  padding: 10px;
-} */
-
-/* .content h2 {
-  margin: 0;
-  padding: 10px;
-}
-
-
-.note-header {
-  align-items: center;
-} */
 .content {
   background-color: #111926;
   color: #ffffff;
@@ -104,7 +63,7 @@ body {
   flex-grow: 1;
   padding: 20px;
   box-sizing: border-box;
-  margin-left: 200px;
+  margin-left: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -121,12 +80,19 @@ body {
   background-color: #0e1420;
   color: #ffffff;
   padding: 10px 20px;
-  border: none;
-  border-radius: 3px;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
   margin-left: auto;
-  margin-top: -30px; /* Adjust the margin-top to move the button to the top-right corner */
+  margin-top: -30px;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.note-submit:hover {
+  background-color: #ffffff;
+  color: #0e1420;
+  border-color: #ffffff;
 }
 
 .content-textarea {
@@ -188,4 +154,42 @@ body {
   font-size: 20px;
   width: 34vw;
   padding: 30px 20px;
+}
+.results {
+  background-color: #0e1420;
+  width: 300px;
+  padding-top: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-container {
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  padding-right: 10px;
+  flex-grow: 1;
+}
+
+.new-note-button {
+  padding: 10px;
+  display: block;
+  background-color: #0e1420;
+  color: #ffffff;
+  border-radius: 3px;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+  width: 100%;
+  border: 0.5px solid #616161;
+  margin-top: auto;
+}
+
+.new-note-button:hover {
+  background-color: #ffffff;
+  color: #0e1420;
+  border-color: #0e1420;
 }

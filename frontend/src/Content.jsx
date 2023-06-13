@@ -3,7 +3,16 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Content = ({ content, time, title, noteID, tags }) => {
+const Content = ({
+  content,
+  time,
+  title,
+  noteID,
+  tags,
+  setContent,
+  setTags,
+  setTitle,
+}) => {
   console.log("Content pagenoteTitle: " + title);
   console.log("Content page noteid: " + noteID);
   console.log("Content page tags: " + tags);
@@ -35,7 +44,8 @@ const Content = ({ content, time, title, noteID, tags }) => {
   };
 
   const handleTagChange = (e) => {
-    setEditedTags(e.target.value.split(","));
+    const value = e.target.value;
+    setEditedTags(value ? value.split(",") : []);
   };
 
   // Event handler for saving the data
@@ -43,6 +53,9 @@ const Content = ({ content, time, title, noteID, tags }) => {
   const handleSave = () => {
     if (!isSaving) {
       setIsSaving(true);
+      setTitle(editedTitle);
+      setContent(editedContent);
+      setTags(editedTags);
 
       console.log("Content pagenoteTitle: " + editedTitle);
       console.log("Content page noteid: " + noteID);
@@ -76,7 +89,7 @@ const Content = ({ content, time, title, noteID, tags }) => {
           });
           setTimeout(() => {
             setIsSaving(false);
-          }, 30000); // Allow saving again after 30 seconds
+          }, 15000); // Allow saving again after 30 seconds
         })
         .catch((error) => {
           console.error("Error saving data:", error);
@@ -105,7 +118,7 @@ const Content = ({ content, time, title, noteID, tags }) => {
           setIsSaving(false);
         }, 30000); // Allow saving again after 30 seconds
       } else {
-        toast("Wait 30 seconds to save", {
+        toast("Wait 15 seconds to save", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -135,7 +148,7 @@ const Content = ({ content, time, title, noteID, tags }) => {
           className="tags-input"
           type="text"
           id="tagsInput"
-          value={editedTags.join(",")}
+          value={editedTags?.join(",") ?? ""}
           onChange={handleTagChange}
         />
         <button

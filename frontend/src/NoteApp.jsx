@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Results from "./Results";
 import Content from "./Content";
@@ -9,8 +9,7 @@ const NoteApp = () => {
   const [time, setTime] = useState("");
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState("");
-  const [noteID, setNoteID] = useState("")
-
+  const [noteID, setNoteID] = useState("");
 
   useEffect(() => {
     requestNotes();
@@ -31,18 +30,27 @@ const NoteApp = () => {
 
   return (
     <div>
-      <Results notes={notes} 
-      setContent={setContent} 
-      setTitle={setTitle} 
-      setTime={setTime} 
-      setTags = {setTags} 
-      setNoteID = {setNoteID}/>
-      
-      <Content content={content} 
-      title = {title} 
-      time = {time} 
-      tags ={tags} 
-      noteID = {noteID}/>
+      <Results
+        notes={notes}
+        setContent={setContent}
+        setTitle={setTitle}
+        setTime={setTime}
+        setTags={setTags}
+        setNoteID={setNoteID}
+      />
+
+      <Content
+        setContent={setContent}
+        setTitle={setTitle}
+        setTime={setTime}
+        setTags={setTags}
+        setNoteID={setNoteID}
+        content={content}
+        title={title}
+        time={time}
+        tags={tags}
+        noteID={noteID}
+      />
     </div>
   );
 };
