@@ -89,7 +89,7 @@ const Content = ({
           });
           setTimeout(() => {
             setIsSaving(false);
-          }, 15000); // Allow saving again after 30 seconds
+          }, 5000); // Allow saving again after 5 seconds
         })
         .catch((error) => {
           console.error("Error saving data:", error);
@@ -116,9 +116,9 @@ const Content = ({
         handleSave();
         setTimeout(() => {
           setIsSaving(false);
-        }, 30000); // Allow saving again after 30 seconds
+        }, 5000); // Allow saving again after 30 seconds
       } else {
-        toast("Wait 15 seconds to save", {
+        toast("Wait 5 seconds to save", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,

@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Note from "./Note";
 import SearchModal from "./SearchModal";
-import axios from "axios";
 
-const Results = ({
-  notes,
-  setContent,
-  setTitle,
-  setTime,
-  setTags,
-  setNoteID,
-}) => {
+const Results = ({ setContent, setTitle, setTime, setTags, setNoteID }) => {
   const [updatedNotes, setUpdatedNotes] = useState([]);
 
   useEffect(() => {
-    setUpdatedNotes(notes || []);
-  }, [notes]);
+    fetchNotes();
+  }, []);
+
+  async function fetchNotes() {
+    try {
+      const response = await axios.get(
+        "https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note"
+      );
+      const json = response.data;
+      console.log(json);
+      setUpdatedNotes(json);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const createNewNote = () => {
     const data = {
@@ -51,6 +59,23 @@ const Results = ({
     setNoteID(newNote.noteID);
   };
 
+  const deleteNote = (noteID) => {
+    axios
+      .delete(
+        `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note/${noteID}`
+      )
+      .then((response) => {
+        console.log("Note deleted:", response);
+        const updatedNotesList = updatedNotes.filter(
+          (note) => note.noteID !== noteID
+        );
+        setUpdatedNotes(updatedNotesList);
+      })
+      .catch((error) => {
+        console.error("Error deleting note:", error);
+      });
+  };
+
   return (
     <div className="results">
       <h1 className="titleCard">Light Notes</h1>
@@ -66,19 +91,23 @@ const Results = ({
               noteID={note.noteID}
               key={note.noteID}
               setContent={setContent}
-              setTitle={setTitle} // Make sure this function is correctly updating the state
+              setTitle={setTitle}
               setTime={setTime}
               setTags={setTags}
               setNoteID={setNoteID}
+              onDeleteNote={deleteNote}
             />
           ))
         ) : (
           <h1>No notes Found</h1>
         )}
       </div>
+
       <button className="new-note-button" onClick={createNewNote}>
-        Create New Note
+        <FontAwesomeIcon icon={faPlusCircle} className="plus-icon" />
+        <span className="button-text">Create New Note</span>
       </button>
+
       <SearchModal
         notes={updatedNotes}
         setContent={setContent}

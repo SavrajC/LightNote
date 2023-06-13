@@ -89,6 +89,12 @@
         "LogGroupName": "/aws/lambda/lightNote-savraj-updateNote"
       }
     },
+    "DeleteNoteLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/lightNote-savraj-deleteNote"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -201,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/lightNote/savraj/1686553922664-2023-06-12T07:12:02.664Z/lightNote.zip"
+          "S3Key": "serverless/lightNote/savraj/1686626665684-2023-06-13T03:24:25.684Z/lightNote.zip"
         },
         "Handler": "getNotes.getNotes",
         "Runtime": "nodejs16.x",
@@ -235,7 +241,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/lightNote/savraj/1686553922664-2023-06-12T07:12:02.664Z/lightNote.zip"
+          "S3Key": "serverless/lightNote/savraj/1686626665684-2023-06-13T03:24:25.684Z/lightNote.zip"
         },
         "Handler": "createNote.createNote",
         "Runtime": "nodejs16.x",
@@ -269,7 +275,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/lightNote/savraj/1686553922664-2023-06-12T07:12:02.664Z/lightNote.zip"
+          "S3Key": "serverless/lightNote/savraj/1686626665684-2023-06-13T03:24:25.684Z/lightNote.zip"
         },
         "Handler": "updateNote.updateNote",
         "Runtime": "nodejs16.x",
@@ -296,34 +302,78 @@
         "UpdateNoteLogGroup"
       ]
     },
-    "GetNotesLambdaVersionIBaEBW9BFqO2cKvMn00gzX34zmWhltpySctiAotqyRU": {
+    "DeleteNoteLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/lightNote/savraj/1686626665684-2023-06-13T03:24:25.684Z/lightNote.zip"
+        },
+        "Handler": "deleteNote.deleteNote",
+        "Runtime": "nodejs16.x",
+        "FunctionName": "lightNote-savraj-deleteNote",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "TracingConfig": {
+          "Mode": "Active"
+        },
+        "Environment": {
+          "Variables": {
+            "stage": "savraj",
+            "TABLE_NAME": "savraj-notes"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "DeleteNoteLogGroup"
+      ]
+    },
+    "GetNotesLambdaVersionNR7HjAKFwkrXYr1o9mnKZQAVVpXBY2GL8FBANesA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetNotesLambdaFunction"
         },
-        "CodeSha256": "V6UufQvBEcofPAcyfTBPrPjc1gpQ84I8+e1VAaDsyVg="
+        "CodeSha256": "vQJg9Kr9mlG3jLSS9OaXNqer3zcTVerZPb/xKK1QX+4="
       }
     },
-    "CreateNoteLambdaVersionBo8RfKhFrmamatdJu9O3halxLKwh0pRwuBIYPl9mOE": {
+    "CreateNoteLambdaVersionGeYdy7tgPmZJKgfQlQZmP3Uw2Rgn5CkrnYzBd1SVDIs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateNoteLambdaFunction"
         },
-        "CodeSha256": "V6UufQvBEcofPAcyfTBPrPjc1gpQ84I8+e1VAaDsyVg="
+        "CodeSha256": "vQJg9Kr9mlG3jLSS9OaXNqer3zcTVerZPb/xKK1QX+4="
       }
     },
-    "UpdateNoteLambdaVersion9KrVUyRD48jyHAy8eQr2vjCgxCn2unMvkzg8gB3Mc": {
+    "UpdateNoteLambdaVersioniBXun7XmiUYYxe8z0oPFaUr3aC4TDmI52SCykYTC0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateNoteLambdaFunction"
         },
-        "CodeSha256": "V6UufQvBEcofPAcyfTBPrPjc1gpQ84I8+e1VAaDsyVg="
+        "CodeSha256": "vQJg9Kr9mlG3jLSS9OaXNqer3zcTVerZPb/xKK1QX+4="
+      }
+    },
+    "DeleteNoteLambdaVersionLey8FEqTFBMyKuAKehuKHV5aH608fItPvOStihLNw": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "DeleteNoteLambdaFunction"
+        },
+        "CodeSha256": "vQJg9Kr9mlG3jLSS9OaXNqer3zcTVerZPb/xKK1QX+4="
       }
     },
     "HttpApi": {
@@ -344,7 +394,8 @@
           "AllowMethods": [
             "OPTIONS",
             "GET",
-            "POST"
+            "POST",
+            "DELETE"
           ],
           "AllowOrigins": [
             "*"
@@ -590,6 +641,81 @@
       },
       "DependsOn": "HttpApiIntegrationUpdateNote"
     },
+    "DeleteNoteLambdaPermissionHttpApi": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DeleteNoteLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "HttpApi"
+              },
+              "/*"
+            ]
+          ]
+        }
+      }
+    },
+    "HttpApiIntegrationDeleteNote": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "DeleteNoteLambdaFunction",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "2.0",
+        "TimeoutInMillis": 6500
+      }
+    },
+    "HttpApiRouteDeleteUserAccountidVarNoteNoteidVar": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "DELETE /user/{accountID}/note/{noteID}",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "HttpApiIntegrationDeleteNote"
+              }
+            ]
+          ]
+        }
+      },
+      "DependsOn": "HttpApiIntegrationDeleteNote"
+    },
     "NotesTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -630,7 +756,7 @@
     "GetNotesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetNotesLambdaVersionIBaEBW9BFqO2cKvMn00gzX34zmWhltpySctiAotqyRU"
+        "Ref": "GetNotesLambdaVersionNR7HjAKFwkrXYr1o9mnKZQAVVpXBY2GL8FBANesA"
       },
       "Export": {
         "Name": "sls-lightNote-savraj-GetNotesLambdaFunctionQualifiedArn"
@@ -639,7 +765,7 @@
     "CreateNoteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateNoteLambdaVersionBo8RfKhFrmamatdJu9O3halxLKwh0pRwuBIYPl9mOE"
+        "Ref": "CreateNoteLambdaVersionGeYdy7tgPmZJKgfQlQZmP3Uw2Rgn5CkrnYzBd1SVDIs"
       },
       "Export": {
         "Name": "sls-lightNote-savraj-CreateNoteLambdaFunctionQualifiedArn"
@@ -648,10 +774,19 @@
     "UpdateNoteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateNoteLambdaVersion9KrVUyRD48jyHAy8eQr2vjCgxCn2unMvkzg8gB3Mc"
+        "Ref": "UpdateNoteLambdaVersioniBXun7XmiUYYxe8z0oPFaUr3aC4TDmI52SCykYTC0"
       },
       "Export": {
         "Name": "sls-lightNote-savraj-UpdateNoteLambdaFunctionQualifiedArn"
+      }
+    },
+    "DeleteNoteLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "DeleteNoteLambdaVersionLey8FEqTFBMyKuAKehuKHV5aH608fItPvOStihLNw"
+      },
+      "Export": {
+        "Name": "sls-lightNote-savraj-DeleteNoteLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {

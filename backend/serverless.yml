@@ -48,23 +48,11 @@ functions:
           path: /user/{accountID}/note/{noteID}
           method: post
 
-  # getSingleNote:
-  #   handler: getSingleNote.getSingleNote
-  #   events:
-  #     - httpApi:
-  #         path: /user/${accountID}/note/${noteID}
-  #         method: get
-  # updateNote:
-  #   handler: createNote.createNote
-  #   events:
-  #     - httpApi:
-  #         path: /user/${accountID}/note/${noteID}
-  #         method: put
-  # deleteNote:
-  #   handler: createNote.createNote
-  #   events:
-  #     - httpApi:
-  #         path: /user/${accountID}/note/${noteID}
-  #         method: post
+  deleteNote:
+    handler: deleteNote.deleteNote
+    events:
+      - httpApi:
+          path: /user/{accountID}/note/{noteID}
+          method: delete
 resources:
   - ${file(resources/notes.yml)}

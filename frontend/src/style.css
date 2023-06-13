@@ -193,3 +193,22 @@ body {
   color: #0e1420;
   border-color: #0e1420;
 }
+
+.noteCard {
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 14px;
+  cursor: pointer;
+}
+.delete-icon {
+  color: grey; /* or color: white; */
+}

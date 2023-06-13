@@ -37,6 +37,7 @@ const NoteApp = () => {
         setTime={setTime}
         setTags={setTags}
         setNoteID={setNoteID}
+        requestNotes={requestNotes}
       />
 
       <Content

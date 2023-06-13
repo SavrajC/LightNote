@@ -1,4 +1,7 @@
 import React from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Note = ({
   noteTitle,
@@ -11,6 +14,7 @@ const Note = ({
   setTime,
   setTags,
   setNoteID,
+  onDeleteNote,
 }) => {
   const handleNoteClick = () => {
     setContent(noteContent);
@@ -19,11 +23,21 @@ const Note = ({
     setTags(tags);
     setNoteID(noteID);
   };
-  console.log("Note BP 1: " + noteContent);
-  console.log("Note Time 2: " + time);
-  console.log("Note Title 3: " + noteTitle);
-  console.log("Note Tags 4: " + tags);
-  console.log("Note Tags 5: " + noteID);
+
+  const deleteNote = () => {
+    axios
+      .delete(
+        `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note/${noteID}`
+      )
+      .then((response) => {
+        console.log("Note deleted:", response);
+        onDeleteNote(noteID); // Callback function to update the notes list after deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting note:", error);
+      });
+  };
+
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div className="noteCard" onClick={handleNoteClick}>
@@ -39,8 +53,11 @@ const Note = ({
           <></>
         )}
       </div>
+      <button className="delete-button" onClick={deleteNote}>
+        <FontAwesomeIcon icon={faTimes} className="delete-icon" />
+      </button>
     </div>
   );
 };
-
+7;
 export default Note;
