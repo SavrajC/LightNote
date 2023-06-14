@@ -5,7 +5,14 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Note from "./Note";
 import SearchModal from "./SearchModal";
 
-const Results = ({ setContent, setTitle, setTime, setTags, setNoteID }) => {
+const Results = ({
+  setContent,
+  setTitle,
+  setTime,
+  setTags,
+  setNoteID,
+  userName,
+}) => {
   const [updatedNotes, setUpdatedNotes] = useState([]);
 
   useEffect(() => {
@@ -15,7 +22,7 @@ const Results = ({ setContent, setTitle, setTime, setTags, setNoteID }) => {
   async function fetchNotes() {
     try {
       const response = await axios.get(
-        "https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note"
+        `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/${userName}/note`
       );
       const json = response.data;
       console.log(json);
@@ -33,7 +40,7 @@ const Results = ({ setContent, setTitle, setTime, setTags, setNoteID }) => {
     };
     axios
       .post(
-        "https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note",
+        `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/${userName}/note`,
         data
       )
       .then((response) => {

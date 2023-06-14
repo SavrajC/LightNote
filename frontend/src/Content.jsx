@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const Content = ({
   content,
@@ -12,6 +13,7 @@ const Content = ({
   setContent,
   setTags,
   setTitle,
+  userName,
 }) => {
   console.log("Content pagenoteTitle: " + title);
   console.log("Content page noteid: " + noteID);
@@ -72,7 +74,7 @@ const Content = ({
       // Make the API request using Axios
       axios
         .post(
-          `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/1/note/${noteID}`,
+          `https://l7flqpsmca.execute-api.us-west-2.amazonaws.com/user/${userName}/note/${noteID}`,
           data
         )
         .then((response) => {
@@ -166,6 +168,16 @@ const Content = ({
         onKeyPress={handleKeyPress}
       ></textarea>
       <h3 className="timeDisplay">{formattedTime}</h3>
+      <Authenticator>
+        {({ signOut }) => (
+          <div>
+            <button onClick={signOut} className="sign-out-btn">
+              Sign out
+            </button>
+          </div>
+        )}
+      </Authenticator>
+
       <ToastContainer />
     </div>
   );
